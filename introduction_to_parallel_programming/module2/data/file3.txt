@@ -1,0 +1,1 @@
+This is a test for the map reduce example that I generated with google gemini in order to have a better grasp on what map reduce does in practice
