@@ -1,0 +1,2 @@
+# Assignment of the python ticket system to get a grip on the python threading API
++ This code is copied for the exercise page of the course but completed with my personal solution, using the repository pattern
