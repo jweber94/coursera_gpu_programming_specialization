@@ -16,27 +16,41 @@ std::pair<std::vector<DATATYPE>, std::vector<DATATYPE>> divide(std::vector<DATAT
     return {lhDivide, rhDivide};
 }
 
-std::vector<DATATYPE> merge(std::vector<DATATYPE>& input1, std::vector<DATATYPE>& input2) {
+std::vector<DATATYPE> merge(std::vector<DATATYPE>& input1, std::vector<DATATYPE>& input2) {    
     // prepare result
     std::vector<DATATYPE> ret;
     ret.reserve(input1.size() + input2.size());
     
     // iterate and merge
     for (auto baseIt = input1.begin(); baseIt != input1.end();) { // no automatic iterator increase since we handle this via the erase() function
+        if (0 == input2.size()) {
+            ret.push_back(*baseIt);
+            baseIt = input1.erase(baseIt);
+        }
         for (auto runIt = input2.begin(); runIt != input2.end();) { // same here
-            if ((baseIt < runIt)) {
+            if (0 == input1.size()) {
+                ret.push_back(*runIt);
+                runIt = input2.erase(runIt);
+                continue;
+            }
+            // insertion logic
+            if ((*baseIt < *runIt)) {
                 ret.push_back(*baseIt);
                 baseIt = input1.erase(baseIt); // needed to avoid iterator invalidation
-            } else if ((runIt < baseIt)) {
+            } else if ((*runIt < *baseIt)) {
                 ret.push_back(*runIt);
                 runIt = input2.erase(runIt);
             } else if (runIt == input2.end()) {
                 ret.push_back(*runIt);
                 runIt = input2.erase(runIt); // this will be the end element since we were already at the end of the vector
             } else {
-                std::cerr << "This should not happen" << std::endl;
+                ++runIt;
             }
-            if (baseIt == input1.end()) {
+            if (baseIt == input1.end() && (0 != input1.size())) {
+                ret.push_back(*baseIt);
+                baseIt = input1.erase(baseIt);
+            }
+            if ((input1.end() == std::next(baseIt)) && (runIt == input2.end())) {
                 ret.push_back(*baseIt);
                 baseIt = input1.erase(baseIt);
             }
@@ -72,31 +86,28 @@ std::vector<std::vector<DATATYPE>> recursiveDivide(std::vector<DATATYPE> inputTo
     }
 }
 
-std::vector<DATATYPE> recursiveMerge(std::vector<std::vector<DATATYPE>> vecOfDataVecs) {
-    std::vector<DATATYPE> ret;
-    while(1) {
-        std::vector<std::vector<DATATYPE>> tmpRet;
-        std::vector<std::vector<DATATYPE>> tmpBase;
-        unsigned int idx{0};
-        for (unsigned int i = 0; i < tmpBase.size(); i = i + 2) {
-            tmpRet.push_back(merge(vecOfDataVecs.at(i), vecOfDataVecs.at(i+1))); // FIXME: WIP
-        }
-        if (1 == tmpRet.size()) {
-            ret = tmpRet.at(0);
+std::vector<std::vector<DATATYPE>> recursiveMerge(std::vector<std::vector<DATATYPE>> vecOfDataVecs) {
+    std::vector<std::vector<DATATYPE>> ret;
+    for (unsigned int i = 0; i < vecOfDataVecs.size(); i = i + 2) {
+        if ((i+1) > (vecOfDataVecs.size() - 1)) {
+            ret.push_back(vecOfDataVecs.at(i));
+        } else {
+            ret.push_back(merge(vecOfDataVecs.at(i), vecOfDataVecs.at(i+1)));   
         }
     }
-    return ret;
+    if (1 != ret.size()) {
+        return recursiveMerge(ret);
+    } else {
+        return ret;
+    }
 }
 
 
 std::vector<DATATYPE> mergesort(const std::vector<DATATYPE>& dataToSort) {
     std::vector<DATATYPE> inputDataToManipulate = dataToSort;
-    
     auto separatedData = recursiveDivide(inputDataToManipulate); // this is a vector of single elemented vectors
-    
-
-
-    return separatedData.at(0);
+    auto mergedData = recursiveMerge(separatedData);
+    return mergedData.at(0);
 }
 
 void printVec(std::vector<DATATYPE> dataToPrint) {
