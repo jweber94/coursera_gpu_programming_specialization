@@ -1,3 +1,9 @@
+/**
+ * This is my first attempt to program a merge sort, purely based on the information that
+ * I could find on the sorting logic that the merge sort realizes. The focus was to get a firm
+ * grasp on the algorithm without taking memory- or runtime efficeny into account.
+ */
+
 #include <iostream>
 #include <vector>
 #include <cmath>
