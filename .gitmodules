@@ -1,0 +1,3 @@
+[submodule "cuda_at_scale_for_enterprise/module5/nppLab/cuda-samples"]
+	path = cuda_at_scale_for_enterprise/module5/nppLab/cuda-samples
+	url = https://github.com/NVIDIA/cuda-samples.git

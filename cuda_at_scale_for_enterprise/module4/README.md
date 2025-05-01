@@ -1,5 +1,11 @@
 # Assignment Instructions
 
+## ***Important Remarks***
++ The implementation is a bottom up mergesort. This is not the normal divide an conquer mergesort.
+   - In order to understand the algorithm, I recommend the following youtube video: https://www.youtube.com/watch?v=IN_ZOU-LK08 
+   - Keep in mind that the aim of the algorithm is that we avoid recursion. Therefor we use only for loops and parallelize over two merge windows.
+
+## Assignment
 For this assignment, you will need to update the host code to appropriately allocate host and device memory, copy from host to device, execute the kernel, copy device to host memory, and print results. Much of the code will be provided, but certain areas will be left for the student to fill out and for the full 100% grade you will need to fix a broken program that may run but it will return unexpected results. The following steps should be taken while developing your solutions to the various steps of the assignment:
 
 1. F​ill in the small bit of code that handles allocation of host and device memory in the memory_allocation.cu file. Note this block will start and end with comments like // FILL IN HOST AND DEVICE MEMORY ALLOCATION CODE.
