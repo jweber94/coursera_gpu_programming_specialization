@@ -2,7 +2,7 @@
 
 ## NPP Library introduction
 + https://developer.nvidia.com/npp
-
++ The npp library is part of the cuda toolkit. Whenever you have installed the cuda toolkit, you can use the npp library.
 
 ## Other students examples
 + Here are some examples of other students that can be used as a reference for the scope of work to pass the assignment:
