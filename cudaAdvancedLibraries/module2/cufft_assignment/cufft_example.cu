@@ -19,7 +19,7 @@ __device__ Complex complexScaleMult(Complex a, Complex b, int scalar) // functio
 __global__ void complexProcess(Complex *a, Complex *b, Complex *c, int size, int scalar) // global must be void since we can only copy data back via cudaMemcpy
 {
     // TODO calculate threadId variable - DONE
-    int blockId = blockIdx.x + blockIdx.y * gridDim.x+ gridDim.x * gridDim.y * blockIdx.z; 
+    int blockId = blockIdx.x + blockIdx.y * gridDim.x+ gridDim.x * gridDim.y * blockIdx.z; 
     int threadId = blockId * (blockDim.x * blockDim.y * blockDim.z) + (threadIdx.z * (blockDim.x * blockDim.y)) + (threadIdx.y * blockDim.x) + threadIdx.x;
 
     // TODO process complexScalarMult on values in a and b at index threadID and the passed scalar, place the result in c[threadId] - DONE
